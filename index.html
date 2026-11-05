@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f2a4a"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg"><title>Rota – Diário de Jornada</title>
+<style>
+:root{--bg:#f2f5fa;--sf:#fff;--ln:#e1e7f0;--tx:#0e1b33;--mu:#66748b;--bl:#0f2a4a;--b2:#1d4f91;--y:#ffc400;--or:#e8590c;--ok:#18a06a;--sh:0 1px 2px #0f2a4a14,0 10px 28px #0f2a4a12}
+@media(prefers-color-scheme:dark){:root{--bg:#0a1424;--sf:#122038;--ln:#203250;--tx:#e8eef9;--mu:#92a3c0;--b2:#8ab8ff;--sh:none}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,Roboto,sans-serif;padding-bottom:110px}
+.top{position:sticky;top:0;z-index:5;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px)}
+.top b,h2,h3,.big,.hd .tt,.bx b{font-family:"Roboto Condensed","sans-serif-condensed",Roboto,sans-serif}
+.top b{font-size:23px;letter-spacing:.05em}.top b::before{content:"";display:inline-block;width:13px;height:13px;border-radius:4px;background:var(--y);margin-right:9px}
+.top small{display:block;font:400 12px system-ui,sans-serif;letter-spacing:0;color:var(--mu);margin-left:22px}
+#st{font-size:13px;padding:6px 12px;border-radius:99px;background:var(--sf);border:1px solid var(--ln);color:var(--mu)}#st.on{background:var(--ok);border-color:var(--ok);color:#fff}
+main{padding:6px 16px 16px;max-width:640px;margin:auto}
+.c{background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:var(--sh)}
+.hero{background:linear-gradient(160deg,#0f2a4a,#1d4f91);color:#fff;border:0}.hero .sub{color:#c6d6ee}.hero .or{color:#ff9d6c}
+h2{font-size:21px;margin:2px 0 8px}h3{font-size:24px;margin-bottom:6px}
+.mu{color:var(--mu)}.sub{color:var(--mu);font-size:14px}.or{color:var(--or);font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}.row{display:flex;gap:10px}.row>*{flex:1}
+button{font:inherit;font-weight:700;border-radius:16px;padding:14px;min-height:58px;background:var(--sf);color:var(--tx);border:1px solid var(--ln);box-shadow:var(--sh)}
+button.p{background:var(--y);color:#1b1400;border-color:var(--y)}button.d{background:var(--bl);color:#fff;border-color:var(--bl)}button.w{width:100%;margin-bottom:10px}
+.grid button{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:88px;text-align:left}.ic{font-size:26px;line-height:1}
+.dial{display:block;width:240px;margin:0 auto 6px}
+label{display:block;font-size:14px;color:var(--mu);margin:12px 0 4px}
+input,select,textarea{width:100%;font:inherit;padding:13px;border:1.5px solid var(--ln);border-radius:12px;background:var(--bg);color:var(--tx)}input[type=checkbox]{width:26px;height:26px}
+.warn{border-color:var(--or);color:var(--or);font-weight:600}
+.tl{position:relative;padding-left:26px}.tl::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:var(--ln)}
+.tl .n{position:relative}.tl .n::before{content:"";position:absolute;left:-24px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--b2);border:3px solid var(--bg)}
+.tl .n.stop::before{background:var(--y)}.tl .n.occ::before{background:var(--or)}.tl .g{color:var(--mu);font-size:13px;margin:-4px 0 8px}
+.k{display:flex;gap:8px;margin-bottom:12px}.k .c{flex:1;margin:0;padding:12px}.k .big{font-size:24px}
+nav{position:fixed;left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:2px;background:var(--bl);border-radius:24px;padding:6px;box-shadow:0 10px 30px #0f2a4a66;z-index:6}
+nav button{flex:1;border:0;box-shadow:none;background:none;color:#fff;opacity:.7;min-height:50px;border-radius:18px;font-size:13px;padding:4px}nav button.a{opacity:1;background:#ffffff22;color:var(--y)}
+#modal{display:none;position:fixed;inset:0;background:#0f2a4acc;z-index:20;overflow:auto;padding:14px}#modal.on{display:block}
+#modal form{max-width:560px;margin:auto;background:var(--sf);border-radius:22px;padding:18px}#modal .row{margin-top:18px}
+#rep{display:none;position:fixed;inset:0;z-index:30;background:#cfd6e1;overflow:auto}#rep.on{display:block}
+.nop{position:sticky;top:0;display:flex;gap:10px;padding:10px;background:var(--bl)}.nop button{min-height:46px}
+.sheet{background:#fff;color:#111;max-width:210mm;margin:10px auto;padding:10mm;font-size:9.5pt;line-height:1.35}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;background:#0f2a4a;color:#fff;padding:10px 12px;border-bottom:4px solid #ffc400;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.hd .tt{font-size:17pt}.who{text-align:right;font-size:9pt}
+.bx{display:flex;gap:6px;margin:10px 0}.bx div{flex:1;border:1px solid #9aa8bd;padding:6px 8px}.bx span{display:block;font-size:8pt;color:#555}.bx b{font-size:13pt}
+.sheet h4{margin:12px 0 4px;color:#1d4f91;font-size:10.5pt;border-bottom:1px solid #9aa8bd}
+.sc{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:8.5pt}th,td{border:1px solid #9aa8bd;padding:3px 5px;text-align:left;vertical-align:top}th{background:#e3e9f2;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slip{height:78mm;border:1.5px dashed #6b7a92;margin:12px 0;display:flex;align-items:center;justify-content:center;color:#8a97ab}
+.sig{margin-top:22px;width:80mm;border-top:1px solid #111;padding-top:3px;font-size:8.5pt}
+.foot{margin-top:12px;font-size:7pt;color:#555;word-break:break-all}
+@media print{@page{size:A4;margin:10mm}body>*:not(#rep){display:none!important}#rep{position:static;background:#fff;overflow:visible}.nop{display:none}.sheet{margin:0;padding:0;max-width:none}}
+</style></head><body>
+<div class="top"><div><b>ROTA</b><small>Diário de jornada</small></div><span id="st"></span></div>
+<main id="app"></main>
+<nav><button data-t="h" onclick="tab='h';sel=null;render()">Hoje</button><button data-t="d" onclick="tab='d';render()">Dia</button><button data-t="i" onclick="tab='i';sel=null;render()">Histórico</button><button data-t="r" onclick="tab='r';render()">Relatórios</button><button data-t="m" onclick="tab='m';render()">Mais</button></nav>
+<div id="modal"></div><div id="rep"></div>
+<script>
+const $=s=>document.querySelector(s),K='rota.v1',WD=['dom','seg','ter','qua','qui','sex','sáb'],IC={stop:'▣',occ:'⚠',fuel:'⛽',swap:'⇄'};
+let db;try{db=JSON.parse(localStorage.getItem(K))}catch(e){}
+db=db||{days:{},audit:[],cfg:{nome:'',emp:''},bk:0};db.loc=db.loc||{};
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(db))}catch(e){alert('ERRO ao gravar os dados. Faça backup já.')}};
+const p2=n=>String(n).padStart(2,'0'),now=()=>Date.now(),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const D=m=>{const d=new Date(m);return p2(d.getDate())+'/'+p2(d.getMonth()+1)+'/'+d.getFullYear()},T=m=>{const d=new Date(m);return p2(d.getHours())+':'+p2(d.getMinutes())},DT=m=>m?D(m)+' '+T(m):'—';
+const H=m=>{m=Math.round(m);return Math.floor(m/60)+'h'+p2(m%60)},iso=m=>{const d=new Date(m);return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate())};
+const loc=m=>new Date(m-new Date(m).getTimezoneOffset()*6e4).toISOString().slice(0,16);
+const days=()=>Object.values(db.days).sort((a,b)=>a.start-b.start),cur=()=>days().find(d=>!d.end),et=e=>e.arr||e.t;
+const wait=e=>e.dep&&e.arr?Math.max(0,(e.dep-e.arr)/6e4):0,veh=v=>esc(v.plate||'—')+' / '+esc(v.trailer||'—');
+const vehAt=(d,t)=>[...d.vehicles].reverse().find(v=>v.from<=t)||d.vehicles[0];
+function met(d){const s=d.start,e=d.end||now(),tot=Math.max(0,(e-s)/6e4);let n=0;const c=new Date(s);c.setHours(0,0,0,0);for(;c.getTime()<e;c.setDate(c.getDate()+1)){const a=c.getTime(),b=new Date(c);b.setHours(5,0,0,0);n+=Math.max(0,Math.min(e,b.getTime())-Math.max(s,a))/6e4}return{tot,ext:Math.max(0,tot-480),noc:n}}
+const lk=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,' '),lks=()=>Object.keys(db.loc).sort((a,b)=>db.loc[b].c-db.loc[a].c);
+function rem(s){s=String(s||'').trim();if(!s)return;const k=lk(s),o=db.loc[k];db.loc[k]={n:o?o.n:s,c:(o?o.c:0)+1}}
+const dl=()=>'<datalist id="dl">'+lks().map(k=>'<option value="'+esc(db.loc[k].n)+'">').join('')+'</datalist>';
+function locEd(i){const k=lks()[i],n=prompt('Nome do local (vazio = retirar da lista):',db.loc[k].n);if(n===null)return;if(!n.trim())delete db.loc[k];else db.loc[k].n=n.trim();save();render()}
+const SP={
+start:{n:'Iniciar dia',f:[['t','Hora de início','t'],['local','Local de início','x'],['plate','Matrícula do camião','x'],['trailer','Matrícula do reboque','x'],['km','Km inicial','n']]},
+end:{n:'Terminar dia',f:[['t','Hora de fim','t'],['local','Local de fim','x'],['km','Km final','n'],['note','Observações do dia','a']]},
+stop:{n:'Paragem',f:[['kind','Tipo','s',['Carga','Descarga','Outro']],['local','Local','x'],['arr','Chegada','t'],['dep','Saída','t?'],['extra','Espera extra (fora do normal)','c'],['reason','Motivo da espera extra','s',['—','Fila','Doca ocupada','Falta de pessoal','Documentação','Loja fechada','Outro']],['guias','N.º da guia de transporte','x'],['shared','Carga','s',['Única para a loja','Partilhada com outras lojas']],['obs','Observações','a']]},
+occ:{n:'Ocorrência',f:[['kind','Tipo','s',['Acidente','Furo de pneu','Avaria','Inspeção','Outro']],['t','Hora','t'],['local','Local','x'],['dur','Duração da paragem (min)','n'],['desc','Descrição','a']]},
+fuel:{n:'Abastecimento',f:[['t','Hora','t'],['local','Local','x'],['dl','Gasóleo (L)','n'],['ad','AdBlue (L)','n'],['km','Km do veículo','n']]},
+swap:{n:'Troca de veículo',f:[['t','Hora','t'],['local','Local','x'],['what','Trocou','s',['Camião','Reboque','Camião e reboque']],['why','Motivo','s',['Avaria','Furo','Outro']],['plate','Nova matrícula do camião','x'],['trailer','Nova matrícula do reboque','x'],['k0','Km final do veículo anterior','n'],['k1','Km inicial do novo','n'],['obs','Observações','a']]}};
+function form(type,ev,done,pre){const sp=SP[type],v=ev||pre||{};let h='<h3>'+sp.n+'</h3>';
+for(const[k,l,t,o]of sp.f){const x=v[k];h+='<label>'+l+'</label>';
+if(t=='s')h+='<select name="'+k+'">'+o.map(i=>'<option'+(x==i?' selected':'')+'>'+i+'</option>').join('')+'</select>';
+else if(t=='a')h+='<textarea name="'+k+'" rows="2">'+esc(x)+'</textarea>';
+else if(t=='c')h+='<input type="checkbox" name="'+k+'"'+(x?' checked':'')+'>';
+else if(t[0]=='t'){const z=x?loc(x):t=='t'?loc(now()):'';h+='<input type="datetime-local" name="'+k+'" value="'+z+'" data-d="'+z+'"'+(t=='t'?' required':'')+'>'}
+else h+='<input name="'+k+'"'+(k=='local'?' list="dl" autocomplete="off"':'')+(t=='n'?' type="number" step="any" inputmode="decimal"':'')+' value="'+esc(x)+'">'}
+h+=dl()+'<div class="row"><button type="button" id="cx">Cancelar</button><button class="p">Guardar</button></div>';
+const m=$('#modal');m.innerHTML='<form>'+h+'</form>';m.className='on';const f=m.firstChild;$('#cx').onclick=()=>m.className='';
+f.onsubmit=q=>{q.preventDefault();const o={};let man=false;
+for(const[k,,t]of sp.f){const el=f.elements[k];let x=t=='c'?el.checked:el.value;
+if(t[0]=='t'){if(el.value&&el.value!=el.dataset.d&&!ev)man=true;x=el.value?new Date(el.value).getTime():null}else if(t=='n')x=x===''?null:+x;o[k]=x}
+if(man)o.man=true;if(o.local)rem(o.local);m.className='';done(o)}}
+function gps(e){navigator.geolocation&&navigator.geolocation.getCurrentPosition(p=>{e.gps=[+p.coords.latitude.toFixed(5),+p.coords.longitude.toFixed(5)];save()},()=>{},{timeout:15000,maximumAge:60000})}
+function startDay(){const l=days().at(-1),v=l&&l.vehicles.at(-1);form('start',null,o=>{let id=iso(o.t);while(db.days[id])id+='b';const d={id,start:o.t,sl:o.local,man:!!o.man,ev:[],vehicles:[{plate:o.plate,trailer:o.trailer,km0:o.km,km1:null,from:o.t}]};gps(d);db.days[id]=d;save();render()},v&&{local:l.el||l.sl,plate:v.plate,trailer:v.trailer,km:v.km1})}
+function endDay(){const d=cur();form('end',null,o=>{if(o.t<=d.start){alert('A hora de fim é anterior ao início.');return}d.end=o.t;d.el=o.local;d.endman=!!o.man;d.note=o.note;d.vehicles.at(-1).km1=o.km;save();render()})}
+function addEv(type){const d=cur();form(type,null,o=>{const e={id:now(),type,...o};gps(e);d.ev.push(e);
+if(type=='swap'){const v=d.vehicles.at(-1),w=o.what;v.km1=o.k0;d.vehicles.push({plate:w=='Reboque'?v.plate:o.plate||v.plate,trailer:w=='Camião'?v.trailer:o.trailer||v.trailer,km0:o.k1,km1:null,from:o.t})}save();render()})}
+function find(id){for(const d of days()){const e=d.ev.find(x=>x.id==id);if(e)return[d,e]}}
+function editEv(id){const[d,e]=find(id);form(e.type,e,o=>{let why='';if(d.end){why=prompt('Dia já encerrado. Indique o motivo da retificação:');if(!why)return}
+for(const k in o)if(JSON.stringify(o[k])!==JSON.stringify(e[k]??null))db.audit.push({ts:now(),day:d.id,ev:e.id,f:k,o:e[k]??null,n:o[k],why});Object.assign(e,o);save();render()})}
+function leave(id){const[,e]=find(id);e.dep=now();save();render()}
+const evl=e=>({stop:()=>esc(e.kind)+' · '+esc(e.local)+'<br>'+T(e.arr)+(e.dep?' → '+T(e.dep)+' · espera '+H(wait(e)):' · a aguardar saída')+(e.extra?' · <span class="or">espera extra</span>':''),occ:()=>T(e.t)+' · '+esc(e.kind)+' · '+esc(e.local)+' · '+(e.dur||0)+' min',fuel:()=>T(e.t)+' · '+(e.dl?e.dl+' L gasóleo ':'')+(e.ad?e.ad+' L AdBlue':''),swap:()=>T(e.t)+' · '+esc(e.what)+' → '+esc(e.plate||e.trailer)}[e.type])();
+function dial(d){const m=met(d),C=2*Math.PI*86,s=new Date(d.start),hs=s.getHours()+s.getMinutes()/60,L=Math.min(m.tot/60,24);
+const a=(f,l,c,w)=>'<circle r="86" cx="110" cy="110" fill="none" stroke="'+c+'" stroke-width="'+w+'" stroke-dasharray="'+l/24*C+' '+C+'" transform="rotate('+(f/24*360-90)+' 110 110)"/>';
+const t=(x,y,s)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="11" fill="#b9c9e4">'+s+'</text>';
+return '<svg viewBox="0 0 220 220" class="dial">'+a(0,24,'#ffffff24',20)+a(0,5,'#ffffff48',20)+a(hs,L,'#ffc400',12)+(L>8?a(hs+8,L-8,'#ff8a4c',12):'')+t(110,52,'00h')+t(168,114,'06h')+t(110,178,'12h')+t(52,114,'18h')+'<text x="110" y="112" text-anchor="middle" font-size="30" font-weight="700" fill="#fff" font-family="Roboto Condensed,sans-serif-condensed,sans-serif">'+H(m.tot)+'</text><text x="110" y="130" text-anchor="middle" font-size="11" fill="#b9c9e4">tempo corrido</text></svg>'}
+function dayView(d){const m=met(d);let h='<div class="c hero"><h2>'+(d.end?D(d.start):'Em curso desde '+DT(d.start))+'</h2>'+dial(d)+'<div class="sub" style="text-align:center">Extras <b class="or">'+H(m.ext)+'</b> · Noturnas (00–05h) <b>'+H(m.noc)+'</b><br>'+veh(d.vehicles.at(-1))+'</div></div>';
+if(!d.end)h+='<div class="grid"><button class="p" onclick="addEv(\'stop\')"><span class="ic">▣</span>Cheguei</button><button onclick="addEv(\'fuel\')"><span class="ic">⛽</span>Abastecimento</button><button onclick="addEv(\'occ\')"><span class="ic">⚠</span>Ocorrência</button><button onclick="addEv(\'swap\')"><span class="ic">⇄</span>Troca de veículo</button></div><button class="d w" onclick="endDay()">■ Terminar dia</button>';
+const ev=[...d.ev].sort((a,b)=>et(a)-et(b));h+='<h2>Registos</h2>'+(ev.length?ev.map(e=>'<div class="c" onclick="editEv('+e.id+')"><b>'+IC[e.type]+' '+SP[e.type].n+'</b>'+(e.man?' <span class="mu">✎ manual</span>':'')+'<div>'+evl(e)+'</div>'+(e.type=='stop'&&!e.dep&&!d.end?'<button class="p w" style="margin:10px 0 0" onclick="event.stopPropagation();leave('+e.id+')">Saí</button>':'')+'</div>').join(''):'<p class="mu">Sem registos. Use os botões acima ao longo do dia.</p>');
+if(d.end)h+='<button class="p w" onclick="repDay(\''+d.id+'\')">Relatório diário</button>';return h}
+const bkw=()=>days().length&&now()-db.bk>6048e5?'<div class="c warn">Backup com mais de 7 dias. Vá a «Mais» e exporte.</div>':'';
+function viewTL(){const d=cur();if(!d)return '<div class="c"><h2>Sem dia em curso</h2><p class="mu">Inicie o dia em «Hoje».</p></div>';
+const m=met(d),ev=[...d.ev].sort((a,b)=>et(a)-et(b));let W=0,G=0,end=d.start,h='<div class="tl"><div class="n"><div class="c"><b>Início do dia</b> <span class="mu">'+T(d.start)+'</span><div class="sub">'+esc(d.sl||'—')+' · '+veh(d.vehicles[0])+'</div></div></div>';
+const gap=t=>{if(t-end>=6e4){G+=t-end;h+='<div class="g">Deslocação '+H((t-end)/6e4)+'</div>'}};
+ev.forEach(e=>{const t=et(e);gap(t);end=e.type=='stop'?(e.dep||now()):e.type=='occ'?t+(e.dur||0)*6e4:t;W+=wait(e);h+='<div class="n '+e.type+'" onclick="editEv('+e.id+')"><div class="c"><b>'+IC[e.type]+' '+SP[e.type].n+'</b> '+(e.man?'<span class="mu">✎ manual</span>':'')+'<div>'+evl(e)+'</div></div></div>'});
+gap(now());return '<div class="k"><div class="c"><span class="sub">Tempo corrido</span><br><b class="big">'+H(m.tot)+'</b></div><div class="c"><span class="sub">Espera</span><br><b class="big">'+H(W)+'</b></div><div class="c"><span class="sub">Deslocação</span><br><b class="big">'+H(G/6e4)+'</b></div></div>'+h+'</div>'}
+let tab='h',sel=null;
+function render(){const c=cur();$('#st').textContent=c?'● Dia em curso':'Sem dia ativo';$('#st').className=c?'on':'';
+$('#app').innerHTML=tab=='d'?viewTL():tab=='h'?(c?bkw()+dayView(c):bkw()+'<div class="c"><h2>Sem dia em curso</h2><p class="mu">Inicie o dia ao começar o trabalho.</p></div><button class="p w" onclick="startDay()">Iniciar dia</button>'):tab=='i'?(sel?'<button class="w" onclick="sel=null;render()">← Voltar</button>'+dayView(db.days[sel]):days().reverse().map(d=>{const m=met(d);return '<div class="c" onclick="sel=\''+d.id+'\';render()"><b>'+D(d.start)+' '+WD[new Date(d.start).getDay()]+'</b><div class="sub">'+H(m.tot)+' · extras '+H(m.ext)+' · noturnas '+H(m.noc)+'</div></div>'}).join('')||'<p class="mu">Sem dias registados.</p>'):tab=='r'?'<div class="c"><h2>Data de referência</h2><input type="date" id="rd" value="'+iso(now())+'"></div><button class="w p" onclick="rp(0)">Relatório diário</button><button class="w" onclick="rp(1)">Relatório semanal</button><button class="w" onclick="rp(2)">Relatório mensal</button>':'<div class="c"><h2>Dados do condutor</h2><label>Nome</label><input value="'+esc(db.cfg.nome)+'" onchange="db.cfg.nome=this.value;save()"><label>Empresa</label><input value="'+esc(db.cfg.emp)+'" onchange="db.cfg.emp=this.value;save()"></div><div class="c"><h2>Backup</h2><p class="mu">Último: '+(db.bk?DT(db.bk):'nunca')+'</p><button class="p w" onclick="expo()">Exportar backup</button><label>Importar backup</label><input type="file" accept=".json" onchange="impo(this)"></div><div class="c"><h2>Retificações</h2><p>'+db.audit.length+' alterações registadas. Nada é apagado.</p></div><div class="c"><h2>Locais memorizados</h2>'+(lks().length?lks().map((k,i)=>'<div class="row" style="align-items:center;margin-bottom:6px"><span>'+esc(db.loc[k].n)+'</span><button style="flex:0;min-height:40px;padding:6px 14px" onclick="locEd('+i+')">Editar</button></div>').join(''):'<p class="mu">Os locais usados ficam aqui.</p>')+'</div>';
+document.querySelectorAll('nav button').forEach(b=>b.className=b.dataset.t==tab?'a':'')}
+async function expo(){const n='rota-backup-'+iso(now())+'.json',f=new File([JSON.stringify(db)],n,{type:'application/json'});
+try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});db.bk=now();save();render();return}}catch(e){}
+const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=n;a.click();db.bk=now();save();render()}
+function impo(i){const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);let n=0;for(const k in x.days)if(!db.days[k]){db.days[k]=x.days[k];n++}db.audit=db.audit.concat((x.audit||[]).filter(a=>!db.audit.some(b=>b.ts==a.ts&&b.f==a.f&&b.ev==a.ev)));for(const k in x.loc||{}){const o=db.loc[k];if(!o)db.loc[k]=x.loc[k];else o.c=Math.max(o.c,x.loc[k].c)}save();alert(n+' dias importados.');render()}catch(e){alert('Ficheiro inválido.')}};r.readAsText(i.files[0])}
+async function h256(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>p2(x.toString(16))).join('')}catch(e){return 'indisponível (abrir a app via HTTPS)'}}
+async function show(h,data){const hs=await h256(JSON.stringify(data));$('#rep').innerHTML='<div class="nop"><button class="p" onclick="print()">Imprimir / Guardar PDF</button><button onclick="$(\'#rep\').className=\'\'">Fechar</button></div><div class="sheet">'+h+'<div class="foot">Gerado em '+DT(now())+' · Código de integridade SHA-256: '+hs+'</div></div>';$('#rep').className='on'}
+const head=(t,s)=>'<div class="hd"><div><div class="tt">'+t+'</div><div>'+s+'</div></div><div class="who">'+esc(db.cfg.nome)+'<br>'+esc(db.cfg.emp)+'</div></div>',bx=a=>'<div class="bx">'+a.map(([k,v])=>'<div><span>'+k+'</span><b>'+v+'</b></div>').join('')+'</div>';
+const tb=(h,r)=>'<div class="sc"><table><tr>'+h.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+(r.length?r.map(x=>'<tr>'+x.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join(''):'<tr><td colspan="'+h.length+'">Sem registos</td></tr>')+'</table></div>';
+function repDay(id){const d=db.days[id],m=met(d),ev=[...d.ev].sort((a,b)=>et(a)-et(b)),of=t=>ev.filter(e=>e.type==t),mk=e=>e.man?' ✎':'',st=of('stop'),W=st.reduce((s,e)=>s+wait(e),0);
+let h=head('RELATÓRIO DIÁRIO DE JORNADA',D(d.start)+' ('+WD[new Date(d.start).getDay()]+')')+bx([['Início',T(d.start)+(d.man?' ✎':'')],['Fim',d.end?T(d.end)+(d.endman?' ✎':''):'em curso'],['Tempo corrido',H(m.tot)],['Horas extras',H(m.ext)],['Noturnas 00–05h',H(m.noc)]]);
+h+='<h4>Locais</h4><p>Início: '+esc(d.sl||'—')+' · Fim: '+esc(d.el||'—')+'</p><h4>Veículos</h4>'+tb(['Camião','Reboque','Desde','Km inicial','Km final'],d.vehicles.map(v=>[esc(v.plate||'—'),esc(v.trailer||'—'),T(v.from),v.km0??'—',v.km1??'—']));
+h+='<h4>Paragens</h4>'+tb(['#','Tipo','Local','Chegada','Saída','Espera','Espera extra','Guia / carga','Obs.'],st.map((e,i)=>[i+1,esc(e.kind),esc(e.local),T(e.arr)+mk(e),e.dep?T(e.dep):'—',e.dep?H(wait(e)):'—',e.extra?'Sim: '+esc(e.reason):'Normal',esc(e.guias)+'<br>'+esc(e.shared),esc(e.obs)]));
+h+='<h4>Ocorrências</h4>'+tb(['Hora','Tipo','Local','Duração','Descrição'],of('occ').map(e=>[T(e.t)+mk(e),esc(e.kind),esc(e.local),(e.dur||0)+' min',esc(e.desc)]));
+h+='<h4>Abastecimentos</h4>'+tb(['Hora','Local','Gasóleo','AdBlue','Km','Veículo'],of('fuel').map(e=>[T(e.t)+mk(e),esc(e.local),(e.dl||0)+' L',(e.ad||0)+' L',e.km??'—',esc(vehAt(d,e.t).plate)]));
+h+='<h4>Trocas de veículo</h4>'+tb(['Hora','Local','Trocou','Motivo','Novo veículo','Km ant. → novo'],of('swap').map(e=>[T(e.t)+mk(e),esc(e.local),esc(e.what),esc(e.why),esc(e.plate)+' / '+esc(e.trailer),(e.k0??'—')+' → '+(e.k1??'—')]));
+h+='<h4>Observações</h4><p>Horas trabalhadas (tempo corrido, início→fim): <b>'+H(m.tot)+'</b>. '+(m.ext?'Horas extras (acima de 8h): <b>'+H(m.ext)+'</b>. ':'Sem horas extras. ')+(m.noc?'Trabalho em período noturno (00h–05h): <b>'+H(m.noc)+'</b>. ':'Sem trabalho em período noturno. ')+'Espera total nas paragens: '+H(W)+'.</p>'+(d.note?'<p>'+esc(d.note)+'</p>':'')+'<p style="color:#555">Valores calculados a partir dos apontamentos do condutor; o registo oficial é o tacógrafo. ✎ = hora introduzida manualmente.</p>';
+const au=db.audit.filter(a=>a.day==id);if(au.length)h+='<h4>Retificações</h4>'+tb(['Data','Campo','Anterior','Novo','Motivo'],au.map(a=>[DT(a.ts),a.f,esc(a.o),esc(a.n),esc(a.why)]));
+show(h+'<div class="slip">Colar aqui o talão do tacógrafo</div><div class="sig">Assinatura do condutor</div>',[d,au])}
+function mon(m){const d=new Date(m);d.setHours(0,0,0,0);d.setDate(d.getDate()-(d.getDay()+6)%7);return d}
+const HD=['Data','Início','Fim','Tempo corrido','Extras (>8h)','Noturnas 00–05h'],rowOf=d=>{const m=met(d);return[D(d.start)+' '+WD[new Date(d.start).getDay()],T(d.start),d.end?T(d.end):'em curso',H(m.tot),H(m.ext),H(m.noc)]};
+function sum(l){return l.reduce((a,d)=>{const m=met(d);a.t+=m.tot;a.e+=m.ext;a.n+=m.noc;a.w+=d.ev.reduce((s,e)=>s+wait(e),0);a.o+=d.ev.filter(e=>e.type=='occ').length;return a},{t:0,e:0,n:0,w:0,o:0})}
+const totRow=(l,t)=>{const s=sum(l);return['<b>'+t+'</b>','','','<b>'+H(s.t)+'</b>','<b>'+H(s.e)+'</b>','<b>'+H(s.n)+'</b>']},tail=l=>{const s=sum(l);return '<p style="margin-top:8px">Espera total nas paragens: '+H(s.w)+' · Ocorrências: '+s.o+'. Detalhe nos relatórios diários.</p><p style="color:#555">Tempo corrido de início a fim do dia. Valores a partir dos apontamentos do condutor.</p>'};
+function repWeek(ms){const a=mon(ms),z=new Date(a);z.setDate(a.getDate()+6);const b=new Date(a);b.setDate(a.getDate()+7);const l=days().filter(d=>d.start>=a&&d.start<b),rows=[];
+for(let i=0;i<7;i++){const x=new Date(a);x.setDate(a.getDate()+i);const dd=l.filter(d=>iso(d.start)==iso(x));dd.length?dd.forEach(d=>rows.push(rowOf(d))):rows.push([D(x)+' '+WD[x.getDay()],'—','—','sem registo','','']) }
+rows.push(totRow(l,'TOTAL DA SEMANA'));const s=sum(l);
+show(head('RELATÓRIO SEMANAL','Segunda '+D(a)+' a domingo '+D(z))+bx([['Dias trabalhados',l.length],['Tempo corrido',H(s.t)],['Horas extras',H(s.e)],['Noturnas',H(s.n)]])+tb(HD,rows)+tail(l),l)}
+function repMonth(ms){const x=new Date(ms),l=days().filter(d=>{const y=new Date(d.start);return y.getFullYear()==x.getFullYear()&&y.getMonth()==x.getMonth()}),g={},rows=[];
+l.forEach(d=>{const k=+mon(d.start);(g[k]=g[k]||[]).push(d)});Object.keys(g).sort().forEach(k=>{g[k].forEach(d=>rows.push(rowOf(d)));rows.push(totRow(g[k],'Subtotal da semana de '+D(+k)))});rows.push(totRow(l,'TOTAL DO MÊS'));
+const s=sum(l),lg=l.reduce((a,d)=>!a||met(d).tot>met(a).tot?d:a,null);
+show(head('RELATÓRIO MENSAL',x.toLocaleDateString('pt-PT',{month:'long',year:'numeric'}))+bx([['Dias trabalhados',l.length],['Tempo corrido',H(s.t)],['Horas extras',H(s.e)],['Noturnas',H(s.n)],['Média diária',l.length?H(s.t/l.length):'—']])+tb(HD,rows)+(lg?'<p style="margin-top:8px">Dia mais longo: '+D(lg.start)+' ('+H(met(lg).tot)+').</p>':'')+tail(l),l)}
+function rp(k){const v=$('#rd').value;if(!v)return;const ms=new Date(v+'T12:00').getTime();if(k==0){const d=days().find(d=>iso(d.start)==v);d?repDay(d.id):alert('Sem dia registado nessa data.')}else k==1?repWeek(ms):repMonth(ms)}
+navigator.storage&&navigator.storage.persist&&navigator.storage.persist();
+'serviceWorker'in navigator&&navigator.serviceWorker.register('sw.js').catch(()=>{});
+setInterval(()=>{if((tab=='h'||tab=='d')&&!$('#modal.on'))render()},30000);render();
+</script></body></html>
